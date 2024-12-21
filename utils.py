@@ -35,5 +35,5 @@ def matriz(reais, previstos, tamanho):
     
     return matriz_confusao
 
-def qual_cluster(pertinencias):
-    return np.argmax(pertinencias, axis=1)
+def matriz_pertinencias(amostras_testes, centros):
+    print(amostras_testes)

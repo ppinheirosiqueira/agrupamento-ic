@@ -11,7 +11,7 @@ def gustafson_kessel(data, num_clusters, max_iter=100, m=2.0, tol=1e-4):
     centers = np.random.rand(num_clusters, n_features)
 
     for iteration in range(max_iter):
-        print(f"Iteração {iteration}")
+        # print(f"Iteração {iteration}")
         U_old = U.copy()
 
         # 1º passo - Calcule os Centros
@@ -56,4 +56,4 @@ def gustafson_kessel(data, num_clusters, max_iter=100, m=2.0, tol=1e-4):
         # print("Covariâncias (F):", F)
         # print("Pertinências (U):", U)
 
-    return U, centers
+    return F, centers
