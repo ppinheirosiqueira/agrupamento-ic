@@ -1,6 +1,6 @@
 import scipy.io
 from agrupador import gustafson_kessel
-from utils import acuracia_e_desvio_padrao, ajustar_rótulos, matriz
+from utils import ajustar_rótulos, matriz
 import numpy as np
 
 def aproximacao(data):
@@ -26,29 +26,26 @@ def aproximacao(data):
     matriz_confusao = matriz(amostras_testes[:,data.shape[1]-1],preditos_arrumados,num_clusters)
     with np.printoptions(precision=0, suppress=True, formatter={'all': lambda x: str(int(x))}):
         print("Matriz de Confusão:\n", matriz_confusao)
-    acuracia, desvio = acuracia_e_desvio_padrao(matriz_confusao)
+    acuracia = 100*np.trace(matriz_confusao) / np.sum(matriz_confusao)
     print(f"Acurácia: {acuracia}%")
-    print("Desvio Padrão: ", desvio)
 
-    return centers, F, acuracia, desvio, matriz_confusao
+    return centers, F, acuracia, matriz_confusao
 
 def testar_30_vezes(arquivo):
     dados = scipy.io.loadmat(arquivo)
     data = dados['data']  
     acuracias = []
-    desvios = []
     matrizes = []
     centros = []
     Fs = []
     for i in range(1,31,1):
         print(f"Iteração {i}")
         np.random.shuffle(data)
-        center, F, acu, des, mc = aproximacao(data)
+        center, F, acu, mc = aproximacao(data)
 
         centros.append(center)
         Fs.append(F)
         acuracias.append(acu)
-        desvios.append(des)
         matrizes.append(mc)
 
     best_index = np.argmax(acuracias)
@@ -57,6 +54,7 @@ def testar_30_vezes(arquivo):
 
     print(f'Melhor Acurácia: {max(acuracias)}')
     print(f'Pior Acurácia: {min(acuracias)}')
+    print(f'Desvio Padrão: {np.std(acuracias)}')
 
     salvar_arquivo = f'melhores_centros_{arquivo.split(".")[0]}.npz'
     np.savez(salvar_arquivo, best_center=best_center, best_F=best_F)

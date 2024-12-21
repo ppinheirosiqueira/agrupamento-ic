@@ -23,11 +23,6 @@ def ajustar_rótulos(reais, previstos):
     
     return previstos_ajustados
 
-def acuracia_e_desvio_padrao(matriz_confusao):
-    acuracia = 100*np.trace(matriz_confusao) / np.sum(matriz_confusao)
-    desvio_padrao = np.std(matriz_confusao, ddof=1)  
-    return acuracia, desvio_padrao
-
 def matriz(reais, previstos, tamanho):
     matriz_confusao = np.zeros((tamanho,tamanho))
     for i in range(len(reais)):
