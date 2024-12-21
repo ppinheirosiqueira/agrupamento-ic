@@ -1,5 +1,4 @@
 import scipy.io
-import matplotlib.pyplot as plt
 from agrupador import gustafson_kessel
 from utils import acuracia_e_desvio_padrao, qual_cluster, ajustar_rótulos, matriz
 import numpy as np
@@ -37,8 +36,8 @@ def testar_30_vezes(arquivo):
         np.random.shuffle(data)
         amostras_treinamento, amostras_testes = data[:index_70], data[index_70:]
         center, acu, des, mc = aproximacao(amostras_treinamento)
-        # PRECISO FAZER OS TESTES AQUI COM AS AMOSTRAS TESTES
         # ACURÁCIA DO TREINAMENTO ESTÁ MUITO BAIXA
+        # PRECISO FAZER OS TESTES AQUI COM AS AMOSTRAS TESTES
         centros.append(center)
         acuracias.append(acu)
         desvios.append(des)
